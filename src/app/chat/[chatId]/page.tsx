@@ -1,5 +1,5 @@
 import PDFViewer from '@/components/PDFViewer';
-import ChatSideBar from '@/components/ui/ChatSideBar';
+import ChatSideBar from '@/components/ChatSideBar';
 import { db } from '@/lib/db';
 import { chats } from '@/lib/db/schema';
 import { auth } from '@clerk/nextjs/server';
