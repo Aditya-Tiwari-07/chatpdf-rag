@@ -6,8 +6,10 @@ import React from 'react';
 import {useDropzone} from 'react-dropzone';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const FileUpload = () => {
+  const router = useRouter();
   const [uploading, setUploading] = React.useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: async ({file_key, file_name}: {file_key: string; file_name: string;}) => {
@@ -38,8 +40,9 @@ const FileUpload = () => {
           return;
         };
         mutate(data, {
-          onSuccess: (data) => {
-            toast.success(data.message);
+          onSuccess: ({ chat_id }) => {
+            toast.success("Chat created successfully");
+            router.push(`/chat/${chat_id}`);
           },
           onError: (error) => {
             toast.error("Error creating chat");
@@ -58,7 +61,7 @@ const FileUpload = () => {
     <div className="p-2 bg-white rounded-x1">
       <div {...getRootProps({
         className: 'border-dashed border-2 rounded-x1 cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col',
-      })}>
+        })}>
         <input {...getInputProps()} />
         {(uploading || isPending) ?(
           <>
@@ -73,8 +76,9 @@ const FileUpload = () => {
             <p className="mt-2 text-sm text-slate-400">Drop PDF Here</p>
           </>
         )}
-    </div>
-  </div>  )
+      </div>
+    </div>  
+  )
 };
 
 export default FileUpload;
