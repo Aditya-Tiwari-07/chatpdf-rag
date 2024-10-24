@@ -42,21 +42,27 @@ const ChatComponent = ({chatId}: Props) => {
   }, [messages])
   
   return (
-    <div className="relative max-h-screen overflow-scroll" id="message-container">
+    <div className="relative h-full flex flex-col overflow-hidden">
       {/* header */}
-      <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-        <h3 className="text-x1 font-bold">Chat</h3>
+      <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit border-b">
+        <h3 className="text-xl font-bold">Chat</h3>
       </div>
 
-      {/* message list */}
-      <MessageList messages={messages} isLoading={isLoading} />
+      {/* message list - takes remaining height */}
+      <div className="flex-1 overflow-y-auto" id="message-container">
+        <MessageList messages={messages} isLoading={isLoading} />
+      </div>
 
-      <form onSubmit={handleSubmit} className='sticky bottom-0 inset-0 px-2 py-4 bg-white'>
-        <div className="flex">
-          <Input value={input} onChange={handleInputChange}
-          placeholder='Ask any question ...'
-          className='w-full'/>
-          <Button className='bg-blue-600 m1-2'>
+      {/* chat input - stays at bottom */}
+      <form onSubmit={handleSubmit} className='sticky bottom-0 inset-x-0 px-2 py-4 bg-white border-t'>
+        <div className="flex gap-2 max-w-full">
+          <Input 
+            value={input} 
+            onChange={handleInputChange}
+            placeholder='Ask any question...'
+            className='w-full'
+          />
+          <Button className='bg-blue-600 flex-shrink-0'>
             <Send className='h-4 w-4' />
           </Button>
         </div>
