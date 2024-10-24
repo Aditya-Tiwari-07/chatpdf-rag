@@ -45,7 +45,7 @@ export async function getContext(query: string, fileKey: string) {
     pageNumber: number;
   };
 
-  let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
+  const docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
   console.log("Extracted text from qualifying docs");
   // 5 vectors
   const context = docs.join("\n").substring(0, 5000);
